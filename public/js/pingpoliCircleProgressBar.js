@@ -1,5 +1,31 @@
-function init(x,y,z)
+async function getX(){
+    const url = 'https://ny3.blynk.cloud/external/api/get?token=3htaBQs8EtyZcjJy_tFRgGOoODAizkWk&v0';
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  };
+  async function getY(){
+    const url = 'https://ny3.blynk.cloud/external/api/get?token=3htaBQs8EtyZcjJy_tFRgGOoODAizkWk&v1';
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  };
+  async function getZ(){
+    const url = 'https://ny3.blynk.cloud/external/api/get?token=3htaBQs8EtyZcjJy_tFRgGOoODAizkWk&v2';
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  };
+
+async function init()
 {
+    const x = await getX();
+    //x=100-((x/1000)*100);
+    const y = await getY();
+    const z = await getZ();
+    console.log(x);
+    console.log(y);
+    console.log(z);
     var canvas = document.getElementById("canvas1");
     ctx = canvas.getContext( "2d" );
     circleProgressBar1 = new pingpoliCircleProgressBar(x/1200, ctx , {xPos:100,yPos:100,radius:40,backgroundLineWidth:6,lineWidth:5} );
@@ -8,7 +34,7 @@ function init(x,y,z)
         circleProgressBar1.draw();
     };
     circleProgressBar1.draw();
-    circleProgressBar1.animateTo(x/1200, 0.5);
+    circleProgressBar1.animateTo(x/1200, 0.01);
 
     canvas = document.getElementById("canvas2");
     ctx = canvas.getContext( "2d" );
@@ -29,6 +55,20 @@ function init(x,y,z)
     };
     circleProgressBar2.draw();
     circleProgressBar2.animateTo(y/100, 0.5);
+    setInterval(redraw, 1000);
+}
+
+async function redraw()
+{
+  const x = await getX();
+  const y = await getY();
+  const z = await getZ();
+  console.log(x);
+  console.log(y);
+  console.log(z);
+  circleProgressBar1.animateTo(x/1200, 0.01);
+  circleProgressBar2.animateTo(y/100, 0.01);
+  circleProgressBar3.animateTo(z/100, 0.01);
 }
 
 function pingpoliCircleProgressBar(x, ctx , options )

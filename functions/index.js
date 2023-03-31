@@ -107,40 +107,73 @@ app.post("/register",function(req,res)
   res.render("sucess");
 })
 
-app.post("/dashboard",function(req,res){
-  const email=req.body.username;
-  const password=req.body.password;
-  //console.log(email);
-  //console.log(password);
-  User.find({},function(er,foundItems)
-  {
-    if(er){
-      console.log("Error")
-    }
-    else{
-      console.log("Inside else");
-        //console.log(foundItems);
-        foundItems.forEach(function(item){
-          if(item.email==email){
-            console.log("Inside if");
-            if(item.password==password){
-              name1=item.name;
-              console.log(name1);
-              email1=item.email;
-              console.log(email);
-                res.sendFile(__dirname+"/dashboard.html");;
-            }
-            //redirect to dashboard
-            //res.sendFile(process.env.PWD+"/public/dashboard.html");
-          }
-          else
-          {
-            //document.getElementById("incorect").innerHTML = "Incorrect username/password!!";
-          }
-        });
+app.post("/dashboard", async function(req,res){
+    const email=req.body.username;
+    const password=req.body.password;
+    //console.log(email);
+    //console.log(password);
+  
+    //code to login a customer by checking username and password?
+    try {
+      const foundUser = await User.findOne({email:email});
+      if(foundUser && foundUser.password===password) {
+        res.sendFile(__dirname+"/dashboard.html");
       }
-    })
+    } catch (err) {
+      console.log(err);
+    }
   })
+
+// app.post("/dashboard",function(req,res){
+//   const email=req.body.username;
+//   const password=req.body.password;
+//   console.log(email);
+//   console.log(password);
+
+// code to login a customer by checking username and password?
+// User.findOne({email:email},function(err,foundUser){
+//     if(err){
+//       console.log(err);
+//     }
+//     else{
+//       if(foundUser){
+//         if(foundUser.password===password)
+//         {
+//             res.sendFile(__dirname+"/dashboard.html");
+//         }
+//       }
+//     }
+//   })
+//////////////////////////////////////
+//   User.find({},function(er,foundItems)
+//   {
+//     if(er){
+//       console.log("Error")
+//     }
+//     else{
+//       //console.log("Inside else");
+//         //console.log(foundItems);
+//         foundItems.forEach(function(item){
+//           if(item.email==email){
+//             console.log("Inside if");
+//             if(item.password==password){
+//               name1=item.name;
+//               console.log(name1);
+//               email1=item.email;
+//               console.log(email);
+//                 res.sendFile(__dirname+"/dashboard.html");
+//             }
+//             //redirect to dashboard
+//             //res.sendFile(process.env.PWD+"/public/dashboard.html");
+//           }
+//           else
+//           {
+//             //document.getElementById("incorect").innerHTML = "Incorrect username/password!!";
+//           }
+//         });
+//       }
+//     })
+  //})
 
 
 exports.app = functions.https.onRequest(app);
