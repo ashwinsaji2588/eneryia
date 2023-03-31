@@ -209,51 +209,48 @@ pingpoliCircleProgressBar.prototype.draw = function()
 
 <body onload="init()">
   <section id="title">
-    <div class="container-fluid">
+    <div class="container-fluid" style="background-color: #285430;">
       <!-- Nav Bar -->
-      <nav class="navbar navbar-expand-lg navbar-dark ">
-        <a class="navbar-brand company-name" href="">zenith.</a>
+      <nav class="z-index-2 navbar navbar-expand-lg navbar-dark ">
+        <a class="navbar-brand company-name" href="dashboard.html">zenith.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <div class="token">
-                <span>25</span>
-                <img src="img/circle.svg" alt="token image">
-              </div>
+              <a class="nav-link" href="dashboard.html">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="lead.html">Leaderboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="marketplace.html">Marketplace</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Log out</a>
+              <a class="nav-link" href="newindex.html">Log out</a>
             </li>
           </ul>
         </div>
+
       </nav>
  </section>
 
 
- <section class="vh-80" style="background-color: white;">
+ <section class="new vh-80" style="background-color: white;">
  <div class="container py-5 h-2">
 
 
 
 
-   <div class="row d-flex-row-reverse justify-content-end align-items-center h-10">
-     <div class="container-fluid">
-       <div class="card" style="border-radius: 15px;">
+  <div class="z-index-n1 d-flex-row-reverse justify-content-end align-items-center h-10">
+     <div class="new container-fluid">
+      <br><br><br>
+       <div class="new card" style="border-radius: 15px;">
+        <div class="new container-fluid">
          <div class="card-body p-4">
            <div class="d-flex text-black">
              <div class="flex-shrink-0">
                <img src="img/user.svg"
                  alt="Generic placeholder image" class="img-fluid"
-                 style="width: 180px; border-radius: 10px;">
+                 style="width: 120px; border-radius: 10px;">
              </div>
              <div class="flex-grow-1 ms-3">
                <h5 class="mb-1">zenith</h5>
@@ -285,17 +282,20 @@ pingpoliCircleProgressBar.prototype.draw = function()
              </div>
            </div>
          </div>
+         </div>
        </div>
        <div>
         <canvas class="pos col-3" id="canvas1" width="200" height="200" style="touch-action: none;"></canvas>
         <canvas class="pos col-3" id="canvas2" width="200" height="200" style="touch-action: none;"></canvas>
         <canvas class="pos col-3" id="canvas3" width="200" height="200" style="touch-action: none;"></canvas>
     </div>
-    <div class="row" style="padding:0 0 0 8em;">
+    <div class="new container-fluid">
+    <div class="row" style="padding:0 0 0 2em;">
       <div class="pos col-3">Moisture</div>
-      <div class="pos col-3">Temperature</div>
+      <div class="pos col-3">Temp</div>
         <div class="pos col-3">Humidity</div>
     </div>
+     </div>
      </div>
    </div>
  </div>
