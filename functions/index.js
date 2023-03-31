@@ -10,12 +10,8 @@ const mongoose=require("mongoose");
 app.set('views',"./views");
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
-//
 
 mongoose.connect("mongodb+srv://admin-ashwin:admin@cluster0.qtcbu.mongodb.net/microp",{useNewUrlParser:true});
-//mongoose.connect("mongodb://localhost:27017/userDB",{useNewUrlParser:true});
 
 const userSchema={
   email:String,
@@ -56,16 +52,10 @@ app.get("/newindex.html",function(req,res){
   res.sendFile(__dirname+"/index.html");
 })
 
-// app.get("/sucess",function(req,res){
-//   res.render("sucess");
-// })
 app.get("/dashboard.html",function(req,res){
   res.sendFile(__dirname+"/dashboard.html");
 })
 
-// app.get("/dashboard",function(req,res){
-//   res.sendFile(process.env.PWD+"/dashboard.html");
-// })
 app.get("/image.html",function(req,res){
   res.sendFile(__dirname+"/image.html");
 })
@@ -96,9 +86,6 @@ app.post("/register",function(req,res)
   const email=req.body.username;
   const password=req.body.password;
   const address=req.body.address;
-  //console.log(email);
-  //console.log(password);
-  //console.log(name);
   const user=new User({
     email:email,
     password:password,
