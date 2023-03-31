@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
 
-  <title>zenith</title>
+  <title>Dashboard</title>
+  <link rel="icon" type="image/png" href="img/microp_logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -19,58 +20,217 @@
   <style> @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); </style>
   <script src="https://kit.fontawesome.com/a23cc9aee3.js" crossorigin="anonymous"></script>
 
-  <script src="js/pingpoliCircleProgressBar.js"></script>
-    <script>
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "http://blynk-cloud.com/w-46vmpPHG5VxMUBasoXc4wPcleUu50o/get/V0", false ); // false for synchronous request
-        xmlHttp.send(null);
-        let a = xmlHttp.responseText;
-        let x = (parseInt(a.substring(2,a.length-2)));
-        console.log("Moisture: " + x);
+  <script>
+    async function getX(){
+    const url = 'https://ny3.blynk.cloud/external/api/get?token=3htaBQs8EtyZcjJy_tFRgGOoODAizkWk&v0';
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  };
+  async function getY(){
+    const url = 'https://ny3.blynk.cloud/external/api/get?token=3htaBQs8EtyZcjJy_tFRgGOoODAizkWk&v1';
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  };
+  async function getZ(){
+    const url = 'https://ny3.blynk.cloud/external/api/get?token=3htaBQs8EtyZcjJy_tFRgGOoODAizkWk&v2';
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  };
 
-        xmlHttp.open( "GET", "http://blynk-cloud.com/w-46vmpPHG5VxMUBasoXc4wPcleUu50o/get/V1", false ); // false for synchronous request
-        xmlHttp.send(null);
-        a = xmlHttp.responseText;
-        let y = (parseInt(a.substring(2,a.length-2)));
-        console.log("Temperature: " + y);
+async function init()
+{
+    let x = await getX();
+    x=100-((x/1000)*100);
+    let y = await getY();
+    let z = await getZ();
+    console.log(x);
+    console.log(y);
+    console.log(z);
+    var canvas = document.getElementById("canvas1");
+    ctx = canvas.getContext( "2d" );
+    circleProgressBar1 = new pingpoliCircleProgressBar(x/1200, ctx , {xPos:100,yPos:100,radius:40,backgroundLineWidth:6,lineWidth:5} );
+    circleProgressBar1.onchange = () => {
+        ctx.clearRect( 0 , 0 , 500 , 500 );
+        circleProgressBar1.draw();
+    };
+    circleProgressBar1.draw();
+    circleProgressBar1.animateTo(x/1200, 0.01);
 
-        xmlHttp.open( "GET", "http://blynk-cloud.com/w-46vmpPHG5VxMUBasoXc4wPcleUu50o/get/V2", false ); // false for synchronous request
-        xmlHttp.send(null);
-        a = xmlHttp.responseText;
-        let z = (parseInt(a.substring(2,a.length-2)));
-        console.log("Humidity: " + z);
-    </script>
+    canvas = document.getElementById("canvas2");
+    ctx = canvas.getContext( "2d" );
+    circleProgressBar3 = new pingpoliCircleProgressBar(z/100, ctx , {xPos:100,yPos:100,radius:40,backgroundLineWidth:6,lineWidth:5} );
+    circleProgressBar3.onchange = () => {
+        ctx.clearRect( 0 , 0 , 500 , 500 );
+        circleProgressBar3.draw();
+    };
+    circleProgressBar3.draw();
+    circleProgressBar3.animateTo(z/100, 0.5);
+
+    canvas = document.getElementById("canvas3");
+    ctx = canvas.getContext( "2d" );
+    circleProgressBar2 = new pingpoliCircleProgressBar(y/100, ctx , {xPos:100,yPos:100,radius:40,backgroundLineWidth:6,lineWidth:5} );
+    circleProgressBar2.onchange = () => {
+        ctx.clearRect( 0 , 0 , 500 , 500 );
+        circleProgressBar2.draw();
+    };
+    circleProgressBar2.draw();
+    circleProgressBar2.animateTo(y/100, 0.5);
+    setInterval(redraw, 1000);
+}
+
+async function redraw()
+{
+  let x = await getX();
+    x=100-((x/1000)*100);
+    let y = await getY();
+    let z = await getZ();
+  console.log(x);
+  console.log(y);
+  console.log(z);
+  circleProgressBar1.animateTo(x/1200, 0.01);
+  circleProgressBar2.animateTo(y/100, 0.01);
+  circleProgressBar3.animateTo(z/100, 0.01);
+}
+
+function pingpoliCircleProgressBar(x, ctx , options )
+{
+    this.ctx = ctx;
+    if ( options ) this.options = options;
+    else this.options = {};
+    let color1 = "#E5D9B6"
+    let color2 = "#285430";
+    if(x < .60)
+    {
+        color2 = "#F49D1A";
+    }
+    if(x < .30)
+    {
+        color2 = "#DC3535";
+    }
+    if ( !this.options.hasOwnProperty("enableBackground") ) this.options.enableBackground = true;
+    if ( !this.options.hasOwnProperty("backgroundColor") ) this.options.backgroundColor = color1;
+    if ( !this.options.hasOwnProperty("color") ) this.options.color = color2 ;
+    if ( !this.options.hasOwnProperty("radius") ) this.options.radius = 50;
+    if ( !this.options.hasOwnProperty("backgroundLineWidth") ) this.options.backgroundLineWidth = 10;
+    if ( !this.options.hasOwnProperty("lineWidth") ) this.options.lineWidth = 8;
+    if ( !this.options.hasOwnProperty("xPos") ) this.options.xPos = 100;
+    if ( !this.options.hasOwnProperty("yPos") ) this.options.yPos = 100;
+    if ( !this.options.hasOwnProperty("enableRoundLineCaps") ) this.options.enableRoundLineCaps = false;
+
+    this.percent = 0.0;
+    this.targetPercent = 0.0;
+    this.deltaPercent = 0.0;
+    this.stepSize = 0.0;
+    this.b_animating = false;
+
+    this.onchange = null;
+}
+
+
+
+pingpoliCircleProgressBar.prototype.animateTo = function( percent , seconds )
+{
+    if ( !this.b_animating )
+    {
+        if ( this.targetPercent != percent )
+        {
+            this.targetPercent = percent;
+            // delta percent is the change of the percent per second
+            this.deltaPercent = (this.targetPercent-this.percent)/seconds;
+            // every second has 50 steps, therefore the step size is the change per second divided by 50
+            this.stepSize = this.deltaPercent/50;
+            this.b_animating = true;
+            this.step();
+        }
+    }
+}
+
+
+
+pingpoliCircleProgressBar.prototype.step = function()
+{
+    this.percent += this.stepSize;
+
+    if ( Math.abs( this.targetPercent - this.percent ) < Math.abs( this.stepSize ) )
+    {
+        this.percent = this.targetPercent;
+        this.b_animating = false;
+    }
+    else
+    {
+        setTimeout( () => {
+            this.step();
+        } , 20 );
+    }
+
+    if ( this.onchange !== null ) this.onchange();
+}
+
+
+
+pingpoliCircleProgressBar.prototype.setPercent = function( percent )
+{
+    this.percent = percent;
+    if ( this.percent < 0 ) this.percent = 0;
+    if ( this.percent > 1 ) this.percent = 1;
+    if ( this.onchange !== null ) this.onchange();
+}
+
+
+
+pingpoliCircleProgressBar.prototype.draw = function()
+{
+    // draw the background
+    if ( this.options.enableBackground )
+    {
+        this.ctx.beginPath();
+        this.ctx.arc( this.options.xPos , this.options.yPos , this.options.radius , Math.PI*3/2 , Math.PI*3/2+Math.PI*2 );
+        this.ctx.strokeStyle = this.options.backgroundColor;
+        this.ctx.lineWidth = this.options.backgroundLineWidth;
+        this.ctx.stroke();
+    }
+
+    if( this.options.enableRoundLineCaps )
+    {
+        this.ctx.lineCap = 'round';
+    }
+
+    this.ctx.beginPath();
+    this.ctx.arc( this.options.xPos , this.options.yPos , this.options.radius , Math.PI*3/2 , Math.PI*3/2+this.percent*Math.PI*2 );
+    this.ctx.strokeStyle = this.options.color;
+    this.ctx.lineWidth = this.options.lineWidth;
+    this.ctx.stroke();
+}
+  </script>
 
 </head>
 
-<body onload="init(x, y, z)">
+<body onload="init()">
   <section id="title">
-    <div class="container-fluid">
+    <div class="container-fluid" style="background-color: #285430;">
       <!-- Nav Bar -->
-      <nav class="navbar navbar-expand-lg navbar-dark ">
-        <a class="navbar-brand company-name" href="">zenith.</a>
+      <nav class="z-index-2 navbar navbar-expand-lg navbar-dark ">
+        <a class="navbar-brand company-name" href="dashboard.html">zenith.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <div class="token">
-                <span>25</span>
-                <img src="img/circle.svg" alt="token image">
-              </div>
+              <a class="nav-link" href="marketplace.html">Marketplace</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="lead.html">Leaderboard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="marketplace.html">Marketplace</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="newindex.html">Log out</a>
             </li>
           </ul>
         </div>
+
       </nav>
  </section>
 
@@ -78,18 +238,17 @@
  <section class="vh-80" style="background-color: white;">
  <div class="container py-5 h-2">
 
-
-
-
-   <div class="row d-flex-row-reverse justify-content-end align-items-center h-10">
+  <div class="z-index-n1 d-flex-row-reverse justify-content-end align-items-center h-10">
      <div class="container-fluid">
+      <br><br><br>
        <div class="card" style="border-radius: 15px;">
+        <div class="container-fluid">
          <div class="card-body p-4">
            <div class="d-flex text-black">
              <div class="flex-shrink-0">
                <img src="img/user.svg"
                  alt="Generic placeholder image" class="img-fluid"
-                 style="width: 180px; border-radius: 10px;">
+                 style="width: 120px; border-radius: 10px;">
              </div>
              <div class="flex-grow-1 ms-3">
                <h5 class="mb-1">zenith</h5>
@@ -121,15 +280,20 @@
              </div>
            </div>
          </div>
+         </div>
        </div>
        <div>
         <canvas class="pos col-3" id="canvas1" width="200" height="200" style="touch-action: none;"></canvas>
         <canvas class="pos col-3" id="canvas2" width="200" height="200" style="touch-action: none;"></canvas>
         <canvas class="pos col-3" id="canvas3" width="200" height="200" style="touch-action: none;"></canvas>
     </div>
-    <p>Moisture</p>
-    <span>Humidity</span>
-    <span>Temperature</span>
+    <div class="container-fluid">
+    <div class="row" style="padding:0 0 0 2em;">
+      <div class="pos col-3">Moisture</div>
+      <div class="pos col-3">Temp</div>
+        <div class="pos col-3">Humidity</div>
+    </div>
+     </div>
      </div>
    </div>
  </div>

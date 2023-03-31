@@ -107,7 +107,7 @@ app.post("/register",function(req,res)
   res.render("sucess");
 })
 
-app.post("/dashboard", async function(req,res){
+app.post("/dashboard.html", async function(req,res){
     const email=req.body.username;
     const password=req.body.password;
     //console.log(email);
@@ -117,7 +117,7 @@ app.post("/dashboard", async function(req,res){
     try {
       const foundUser = await User.findOne({email:email});
       if(foundUser && foundUser.password===password) {
-        res.sendFile(__dirname+"/dashboard.html");
+        res.redirect(__dirname+"/dashboard.html");
       }
     } catch (err) {
       console.log(err);
