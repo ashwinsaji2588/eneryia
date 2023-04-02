@@ -42,10 +42,12 @@
 
 async function init()
 {
-    let x = await getX();
-    x=100-((x/1000)*100);
+  let x = await getX();
+  x = (1 - ((x - 300) /6))*(-0.01);
     let y = await getY();
+    y = y /50
     let z = await getZ();
+    z = z/100;
     console.log(x);
     console.log(y);
     console.log(z);
@@ -57,7 +59,7 @@ async function init()
         circleProgressBar1.draw();
     };
     circleProgressBar1.draw();
-    circleProgressBar1.animateTo(x/1200, 0.01);
+    circleProgressBar1.animateTo(x, 0.01);
 
     canvas = document.getElementById("canvas2");
     ctx = canvas.getContext( "2d" );
@@ -67,7 +69,7 @@ async function init()
         circleProgressBar3.draw();
     };
     circleProgressBar3.draw();
-    circleProgressBar3.animateTo(z/100, 0.5);
+    circleProgressBar3.animateTo(z, 0.5);
 
     canvas = document.getElementById("canvas3");
     ctx = canvas.getContext( "2d" );
@@ -77,22 +79,24 @@ async function init()
         circleProgressBar2.draw();
     };
     circleProgressBar2.draw();
-    circleProgressBar2.animateTo(y/100, 0.5);
+    circleProgressBar2.animateTo(y, 0.5);
     setInterval(redraw, 1000);
 }
 
 async function redraw()
 {
   let x = await getX();
-    x=100-((x/1000)*100);
+  x = (1 - ((x - 300) /6))*(-0.01);
     let y = await getY();
+    y = y /50
     let z = await getZ();
+    z = z/100;
   console.log(x);
   console.log(y);
   console.log(z);
-  circleProgressBar1.animateTo(x/1200, 0.01);
-  circleProgressBar2.animateTo(y/100, 0.01);
-  circleProgressBar3.animateTo(z/100, 0.01);
+  circleProgressBar1.animateTo(x, 0.01);
+  circleProgressBar2.animateTo(y, 0.01);
+  circleProgressBar3.animateTo(z, 0.01);
 }
 
 function pingpoliCircleProgressBar(x, ctx , options )
@@ -102,14 +106,14 @@ function pingpoliCircleProgressBar(x, ctx , options )
     else this.options = {};
     let color1 = "#E5D9B6"
     let color2 = "#285430";
-    if(x < .60)
+    /*if(x < .50)
     {
         color2 = "#F49D1A";
     }
     if(x < .30)
     {
         color2 = "#DC3535";
-    }
+    }*/
     if ( !this.options.hasOwnProperty("enableBackground") ) this.options.enableBackground = true;
     if ( !this.options.hasOwnProperty("backgroundColor") ) this.options.backgroundColor = color1;
     if ( !this.options.hasOwnProperty("color") ) this.options.color = color2 ;
@@ -347,7 +351,7 @@ pingpoliCircleProgressBar.prototype.draw = function()
     <p>© Copyright Zenith</p>
 
   </footer>
-
+  <script src="//code.tidio.co/an2yav56ptnhnpl1t1pikgrqfbakg3jo.js" async></script>
 
 </body>
 

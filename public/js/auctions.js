@@ -1,16 +1,16 @@
 // For a real auction, set this to false
 let demoAuction = true;
-let primaryImages = ["./img/tom.jpeg", "./img/brinj.jpg", "./img/oni.jpg", "./img/swepot.jpg", "./img/cap.jpg", 
-"./img/gourd.jpg", "./img/corr.jpg", "./img/chilli.jpg", "./img/radish.jpg", "./img/peas.jpg", "./img/scal.jpg",
-"./img/carrot.jpg"];
-let titles = ["Jersey Boy Tomatoes", "Indian Eggplants", "Spring Onions", "Sweet Potatoes", "Bell Peppers", 
-"India Star Bittergourd", "Potluck Coriander", "Bird's Eye Chilli", ".French Breakfast Radish", "Terminator Peas",
-"Classic Green Onions", "Imperator Carrots"];
+let primaryImages = ["./img/tom.jpeg", "./img/brinj.jpg", "./img/oni.jpg", "./img/ladys.jpeg", "./img/cap.jpg", 
+"./img/gourd.jpg", "./img/corr.jpg", "./img/chilli1.jpeg", "./img/spinach.jpeg", "./img/peas.jpg", "./img/chilli.jpg",
+"./img/cucumber.jpeg"];
+let titles = ["Jersey Boy Tomatoes", "Indian Eggplants", "Spring Onions", "Lady's Finger", "Bell Peppers", 
+"India Star Bittergourd", "Potluck Coriander", "Bird's Eye Chilli", "Spinach", "Terminator Peas",
+"Chilli", "Cucumber"];
 let subtitles = [];
 let details = [];
-let secondaryImages = ["./img/tom.jpeg", "./img/brinj.jpg", "./img/oni.jpg", "./img/swepot.jpg", "./img/cap.jpg", 
-"./img/gourd.jpg", "./img/corr.jpg", "./img/chilli.jpg", "./img/radish.jpg", "./img/peas.jpg", "./img/scal.jpg",
-"./img/carrot.jpg"];
+let secondaryImages = ["./img/tom.jpeg", "./img/brinj.jpg", "./img/oni.jpg", "./img/ladys.jpeg", "./img/cap.jpg", 
+"./img/gourd.jpg", "./img/corr.jpg", "./img/chilli1.jpeg", "./img/spinach.jpeg", "./img/peas.jpg", "./img/chilli.jpg",
+"./img/cucumber.jpeg"];
 let startingPrices = [55, 60, 20, 13, 14, 20, 99, 10, 12, 16, 13, 17];
 let endTimes = []; // Make sure to fix these to UTC time so they don't change with the users timezone
 

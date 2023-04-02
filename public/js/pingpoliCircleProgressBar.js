@@ -20,7 +20,7 @@ async function getX(){
 async function init()
 {
     const x = await getX();
-    //x=100-((x/1000)*100);
+    x = 100 - ((x - 300) / 6);
     const y = await getY();
     const z = await getZ();
     console.log(x);
@@ -61,8 +61,9 @@ async function init()
 async function redraw()
 {
   const x = await getX();
+  x = 100 - ((x - 300) / 6);
   const y = await getY();
-  const z = await getZ();
+  const z = await getZ()
   console.log(x);
   console.log(y);
   console.log(z);
